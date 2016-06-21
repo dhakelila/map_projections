@@ -17,8 +17,6 @@ define([
       
       //Map
       this.map = new MapView();
-
-      this._setListeners();
     },
 
     _initApp: function() {
