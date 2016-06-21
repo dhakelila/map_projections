@@ -1,9 +1,8 @@
 define([
   'jquery', 
   'underscore',
-  'backbone', 
-  'proj4leaflet'
-], function($, _, Backbone, proj4L) {
+  'backbone'
+], function($, _, Backbone) {
   
   'use strict';
 
@@ -20,8 +19,8 @@ define([
         worldCopyJump: false
       },
       cartodb: {
-        user_name: 'goal16',
-        css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
+        user_name: 'dhakelila',
+        css: '#score{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
       }
     },
 
@@ -30,22 +29,8 @@ define([
     },
 
     _createMap: function() {
-      var crs = new L.Proj.CRS(
-        'EPSG:3786',
-        '+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs',
-        {
-          resolutions: [
-            131072, 65536, 32768, 16383, 4096, 2048, 1024, 512, 256, 128,
-            64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125
-          ],
-          origin: [0, 0]
-        });
-
-      this.options.map.crs = crs;
-
       /* Here we create the map with Leafleft... */
       this.map = L.map(this.el, this.options.map);
-      this.map.setView([90, 14.99], 1);
 
       this._activeLayer();
     },
@@ -57,14 +42,13 @@ define([
 
         this._addLayer();
 
-        this.map.setView([90, 14.99], 1);
       }, this));
     },
 
     _createLayer: function() {
       var sql = this._getLayerQuery();
       var cartoAccount = this.options.cartodb.user_name;
-      var cartoCss = this.options.cartodb.css || '#table_score_test{ polygon-fill: #FF6600; polygon-opacity: 0.7; line-color: #FFF; line-width: 0.5; line-opacity: 1; }';
+      var cartoCss = this.options.cartodb.css || '#score{ polygon-fill: #FF6600; polygon-opacity: 0.7; line-color: #FFF; line-width: 0.5; line-opacity: 1; }';
       var deferred = $.Deferred();
 
       var request = {
@@ -113,7 +97,7 @@ define([
 
     _getLayerQuery: function() {
 
-      var query = 'SELECT  cartodb_id,  cartodb_georef_status,  indicator_slug, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score_test';
+      var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator),954030) as the_geom_webmercator FROM  score_test';
 
       return query;
     },
