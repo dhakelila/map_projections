@@ -1,7 +1,7 @@
 {
   "name": "caf-map",
   "version": "1.0.0",
-  "description": "Visualizing CAF projects over a map ",
+  "description": "Map projections test ",
   "main": "app/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

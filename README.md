@@ -1,6 +1,4 @@
-# CAF map
-
-This is a visualization of CAF projects over a map.
+# MAP PROJECTIONS TEST
 
 ## Installation
 
