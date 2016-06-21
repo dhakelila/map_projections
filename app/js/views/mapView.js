@@ -20,7 +20,7 @@ define([
         worldCopyJump: false
       },
       cartodb: {
-        user_name: 'goal16',
+        user_name: 'dhakelila',
         css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
       }
     },
@@ -113,7 +113,7 @@ define([
 
     _getLayerQuery: function() {
 
-      var query = 'SELECT  cartodb_id,  cartodb_georef_status,  indicator_slug, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score_test';
+      var query = 'SELECT  cartodb_id,  cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score';
 
       return query;
     },
