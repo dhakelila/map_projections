@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+- '4.1'
+script:
+- npm run build
+after_success: bash ./scripts/deploy
+branches:
+  only:
+  - master
+env:
+  global:
+  - GH_REF: github.com/Vizzuality/caf-map
+  - secure: cWX8FU2I9ZJueUEA/gdo8BTlKkFP/N4yBBGYjI6RHCz/k/RDfG1IARRVZmNwVeyB0BPQksC+3Z3QHG1vQes25G0+IbSBTHiTZHMwMvTBUu/SUSBSFFrUMyt5hpJmCybQoo8rc+WVnt6T0DugL3LQwm/DhEnUtDcpOOx59BKfH3pDtJ7BZzQHYZ8FioXYeA4FohlXtRDlC16pJ4OBtHOhmWgofgAE8qmlu9iJAbzsdssHVOM9xo6hfmNlx+GM4AAvhv5xJndjpVYTw02Y9BiG8osvx/venJuxvDi0hmUOw1FgzXDhhJ7vYrBMuqb2llJB9NpiSszSpfmyzLTDHRbuRmXszqLNewqrnueG+uvVXgVOC1q8MuU3atInlCqrKFA238Sqnph2MX3nmtbaIjjp9l0SK/JpMwvcc7C/srrWzBGDP3BJUtd21hdQdFS9T8TptS8EBQL5H0yfD0/37ZP7WlaQH6ADP0Om0mqT0BotV5nqIisXcH6MzzBQ0rtRQ2byt99NOg5FU9P0GNz98glbdKcl4JFEVKPsgf8YzRbBWAPkPx8Kv0U16U9yHpHv7rWr0j/9zHRhtDoBXebF0t9GoegvTpv0pp6FjNutD9EIZi0+FdDkPUMyqHlbASpasFTxir6XPpJKc8AbJqkdy5dOMjloDXnG4JZnsqFSLBO/Hyw=

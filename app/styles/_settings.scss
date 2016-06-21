@@ -1,0 +1,47 @@
+/*
+ * Add here values that
+ * affect the whole proyect
+ */
+
+////////////////////
+//**** Screen ****//
+////////////////////
+$screen-xs: 320px;
+$screen-s: 640px;
+$screen-m: 768px;
+$screen-l: 1024px;
+$screen-xl: 1280px;
+$screen-xxl: 1300px;
+
+
+////////////////////
+//**** Fonts ****//
+////////////////////
+$font-main: sans-serif;
+$font-secondary: sans-serif;
+
+//Font sizes
+$font-size-l: 40px;
+$font-size: 20px;
+$font-size-xs: 10px;
+
+
+////////////////////
+//**** Colors ****//
+////////////////////
+$white: #fff;
+$black: #000;
+
+//Theme colors
+$color-1: $white;
+$color-2: $black;
+
+//Font colors
+$font-color-1: $black;
+$font-color-2: $white;
+
+
+//////////////////////////////
+//**** Main layout vars ****//
+//////////////////////////////
+$dashboard_width: 320px;

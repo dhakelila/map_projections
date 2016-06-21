@@ -1,0 +1,22 @@
+<div class="l-dashboard-filters">
+  <h2>location</h2>
+  <select name="location" id="location">
+    {{#each projects}}
+      <option value="{{location}}">{{location}}</option>
+    {{/each}}
+  </select>
+
+  <h2>Amount</h2>
+  <select name="amount" id="amount">
+    {{#each projects}}
+      <option value="{{amount}}">{{amount}}</option>
+    {{/each}}
+  </select>
+
+  <h2>Status</h2>
+  <select name="status" id="status">
+    {{#each projects}}
+      <option value="{{status}}">{{status}}</option>
+    {{/each}}
+  </select>
+</div>

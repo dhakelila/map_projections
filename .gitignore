@@ -1,0 +1,8 @@
+# OS
+.DS_Store
+
+#Libraries
+/node_modules
+
+#Builds
+/build

@@ -1,0 +1,16 @@
+<div class="l-dashboard-list">
+  {{#if projects}}
+  <ul>
+    {{#each projects}}
+      <li>
+        <p class="project-name">{{name}}</p>
+        <p class="location">{{location}}</p>
+        <p class="description">{{description}}</p>
+        </hr>
+      </li>
+    {{/each}}
+  </ul>
+  {{else}}
+  <p>No projects for those params</p>
+  {{/if}}
+</div>
