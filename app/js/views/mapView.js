@@ -113,7 +113,7 @@ define([
 
     _getLayerQuery: function() {
 
-      var query = 'SELECT  cartodb_id,  cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score';
+      var query = 'SELECT  cartodb_id,  cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score_test';
 
       return query;
     },
