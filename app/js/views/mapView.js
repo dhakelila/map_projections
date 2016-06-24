@@ -19,7 +19,7 @@ define([
           center: [0, 0],
           zoom: 2,
           // use proj4 text for desired SRID
-          crs: cartodbProj('+proj=eqc +lat_ts=60 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs ')
+          crs: cartodbProj('+proj=mill +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +R_A +datum=WGS84 +units=m +no_defs')
         },
         cartodb: {
           user_name: 'dhakelila',
@@ -107,7 +107,7 @@ define([
 
     _getLayerQuery: function() {
 
-       var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator), 54002) as the_geom_webmercator FROM  score_test';
+       var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator), 54003) as the_geom_webmercator FROM  score_test';
 
        // var query = 'SELECT * FROM score_test';
 
