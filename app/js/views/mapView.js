@@ -1,8 +1,9 @@
 define([
   'jquery', 
   'underscore',
-  'backbone'
-], function($, _, Backbone) {
+  'backbone',
+  '../lib/cartodb.proj'
+], function($, _, Backbone, cartodbProj) {
   
   'use strict';
 
@@ -15,11 +16,10 @@ define([
     options: {
         basemap: 'https://api.tiles.mapbox.com/v4/goal16.9990f1b9/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ29hbDE2IiwiYSI6ImNpcGgzaWwzbDAwMW52Mmt3ZG5tMnRwN3gifQ.-e8de3rW2J8gc2Iv3LzMnA',
         map: {
-          center: [39.1, 4.5],
+          center: [0, 0],
           zoom: 2,
-          scrollWheelZoom: false,
-          continuousWorld: true,
-          worldCopyJump: false
+          // use proj4 text for desired SRID
+          crs: cartodbProj('+proj=eqc +lat_ts=60 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +datum=WGS84 +units=m +no_defs ')
         },
         cartodb: {
           user_name: 'dhakelila',
@@ -42,7 +42,15 @@ define([
       /* ...and we add the basemap layer with Leaflet as well */
       this.map.addLayer(baseMap);
 
+      this._setMapListeners();
       this._activeLayer();
+    },
+
+    _setMapListeners: function() {
+      this.map.on('click', this._popUpSetUp.bind(this));
+
+      // this.map.on('zoomend', _.bind(this._onZoomMap, this));
+      // this.map.on('dragend', _.bind(this._onDragEndMap, this));
     },
 
     _activeLayer: function() {
@@ -99,9 +107,23 @@ define([
 
     _getLayerQuery: function() {
 
-       var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator), 54030) as the_geom_webmercator FROM  score_test';
+       var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator), 54002) as the_geom_webmercator FROM  score_test';
+
+       // var query = 'SELECT * FROM score_test';
 
       return query;
+    },
+
+    _popUpSetUp: function(e) {
+      console.log(e.latlng);
+
+      // this.popUp = new PopUpView({
+      //   layer: this.status.get('layer'),
+      //   latLng: e.latlng,
+      //   map: this.map,
+      //   zoom: this.map.getZoom(),
+      //   mobile: this.mobile
+      // });
     },
 
   });
