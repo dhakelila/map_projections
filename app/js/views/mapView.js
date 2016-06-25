@@ -1,7 +1,7 @@
 define([
   'jquery', 
   'underscore',
-  'backbone', 
+  'backbone',
   'proj4leaflet'
 ], function($, _, Backbone, proj4L) {
   
@@ -14,16 +14,19 @@ define([
     el: '#map',
 
     options: {
-      map: {
-        scrollWheelZoom: false,
-        continuousWorld: true,
-        worldCopyJump: false
+        basemap: 'https://api.tiles.mapbox.com/v4/goal16.9990f1b9/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiZ29hbDE2IiwiYSI6ImNpcGgzaWwzbDAwMW52Mmt3ZG5tMnRwN3gifQ.-e8de3rW2J8gc2Iv3LzMnA',
+        map: {
+          zoom: 2,
+          center: [0, 0],
+          scrollWheelZoom: false,
+          continuousWorld: true,
+          worldCopyJump: false
+        },
+        cartodb: {
+          user_name: 'dhakelila',
+          css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
+        }
       },
-      cartodb: {
-        user_name: 'dhakelila',
-        css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
-      }
-    },
 
     initialize: function() {
       this._createMap();
@@ -31,33 +34,36 @@ define([
 
     _createMap: function() {
       var crs = new L.Proj.CRS(
-        'EPSG:3786',
-        '+proj=eqc +lat_ts=0 +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +a=6371007 +b=6371007 +units=m +no_defs',
-        {
-          resolutions: [
-            131072, 65536, 32768, 16383, 4096, 2048, 1024, 512, 256, 128,
-            64, 32, 16, 8, 4, 2, 1, 0.5, 0.25, 0.125
-          ],
-          origin: [0, 0]
-        });
+        'ESRI:54003',
+        '+proj=mill +lat_0=0 +lon_0=0 +x_0=0 +y_0=0 +R_A +datum=WGS84 +units=m +no_defs'
+      );
 
-      this.options.map.crs = crs;
+      // this.options.map.crs = crs;
+
+      /* this is the definition for basemap */
+      var baseMap = L.tileLayer(this.options.basemap, {
+        attribution: '<a href="https://www.mapzen.com/rights">Attribution.</a>. Data &copy;<a href="https://openstreetmap.org/copyright">OSM</a> contributors.'
+      });
 
       /* Here we create the map with Leafleft... */
       this.map = L.map(this.el, this.options.map);
-      this.map.setView([90, 14.99], 1);
+      /* ...and we add the basemap layer with Leaflet as well */
+      this.map.addLayer(baseMap);
 
+      this._setMapListeners();
       this._activeLayer();
+    },
+
+    _setMapListeners: function() {
+      this.map.on('click', this._popUpSetUp.bind(this));
+
+      // this.map.on('zoomend', _.bind(this._onZoomMap, this));
+      // this.map.on('dragend', _.bind(this._onDragEndMap, this));
     },
 
     _activeLayer: function() {
       this._createLayer().done(_.bind(function() {
-        //We remove the previous layer just when the new one arrive.
-        //This way, we are sure we only have one layer at a time.
-
         this._addLayer();
-
-        this.map.setView([90, 14.99], 1);
       }, this));
     },
 
@@ -88,11 +94,7 @@ define([
       }).done(_.bind(function(data) {
             var tileUrl = 'http://'+ cartoAccount +'.cartodb.com/api/v1/map/'+ data.layergroupid + '/{z}/{x}/{y}.png32';
             this._removeLayer();
-            this.layer = L.tileLayer(tileUrl, {
-              maxZoom: 14,
-              minZoom: 0,
-              continuousWorld: true
-            });
+            this.layer = L.tileLayer(tileUrl, { noWrap: true });
             return deferred.resolve();
           }, this));
 
@@ -113,9 +115,23 @@ define([
 
     _getLayerQuery: function() {
 
-      var query = 'SELECT  cartodb_id,  cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator),3786) as the_geom_webmercator FROM  score_test';
+       var query = 'SELECT  cartodb_id, cartodb_georef_status, iso, score,  st_transform(st_makevalid(the_geom_webmercator), 54003) as the_geom_webmercator FROM  score_test';
+
+       // var query = 'SELECT * FROM score_test';
 
       return query;
+    },
+
+    _popUpSetUp: function(e) {
+      console.log(e.latlng);
+
+      // this.popUp = new PopUpView({
+      //   layer: this.status.get('layer'),
+      //   latLng: e.latlng,
+      //   map: this.map,
+      //   zoom: this.map.getZoom(),
+      //   mobile: this.mobile
+      // });
     },
 
   });
