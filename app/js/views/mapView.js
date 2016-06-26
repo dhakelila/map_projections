@@ -23,7 +23,7 @@ define([
         },
         cartodb: {
           user_name: 'dhakelila',
-          css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.7; line-color: #f6faf9; line-width: 0.5; line-opacity: 1; }'
+          css: '#score_test{ polygon-fill: #82bf72; polygon-opacity: 0.6; line-color: #FFF; line-width: 0.5; line-opacity: 1; } #score_test[score=null]{ polygon-fill: transparent; }'
         }
       },
 
