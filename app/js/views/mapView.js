@@ -2,8 +2,9 @@ define([
   'jquery', 
   'underscore',
   'backbone',
-  '../lib/cartodb.proj'
-], function($, _, Backbone, cartodbProj) {
+  '../lib/cartodb.proj',
+  './pop_up.js'
+], function($, _, Backbone, cartodbProj, PopUpView) {
   
   'use strict';
 
@@ -117,13 +118,11 @@ define([
     _popUpSetUp: function(e) {
       console.log(e.latlng);
 
-      // this.popUp = new PopUpView({
-      //   layer: this.status.get('layer'),
-      //   latLng: e.latlng,
-      //   map: this.map,
-      //   zoom: this.map.getZoom(),
-      //   mobile: this.mobile
-      // });
+      this.popUp = new PopUpView({
+        latLng: e.latlng,
+        map: this.map,
+        zoom: this.map.getZoom()
+      });
     },
 
   });
